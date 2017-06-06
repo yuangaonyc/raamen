@@ -46,6 +46,7 @@ module Raamen
     def render(template_name)
       template_path = File.join(
         Dir.pwd,
+        "app",
         "views",
         "#{self.class.name.underscore}",
         "#{template_name}.html.erb"

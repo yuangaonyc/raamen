@@ -37,7 +37,7 @@ module Raamen
       req = Rack::Request.new(env)
       res = Rack::Response.new
       file_path = File.join(
-	Dir.pwd,
+	      Dir.pwd,
         req.path
       )
 

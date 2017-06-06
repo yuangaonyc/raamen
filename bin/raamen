@@ -1,0 +1,79 @@
+#!/usr/bin/env ruby
+require 'thor'
+require_relative '../lib/raamen/file_contents/db_connection_content'
+require_relative '../lib/raamen/file_contents/app_content'
+require_relative '../lib/raamen/file_contents/gem_file_content'
+
+class RaamenCLI < Thor
+
+  desc "new", "creates new project directory"
+  def new(app_name)
+    system "mkdir", "#{app_name}"
+    system "touch", "#{app_name}/Gemfile"
+    system "touch", "#{app_name}/.gitignore"
+    system "mkdir", "#{app_name}/app"
+    system "touch", "#{app_name}/app/#{app_name}.rb"
+    system "touch", "#{app_name}/app/db_connection.rb"
+    system "mkdir", "#{app_name}/db"
+    system "touch", "#{app_name}/db/#{app_name}.db"
+    system "touch", "#{app_name}/db/#{app_name}.sql"
+    system "mkdir", "#{app_name}/app/models"
+    system "mkdir", "#{app_name}/app/controllers"
+    system "mkdir", "#{app_name}/app/views"
+    system "mkdir", "#{app_name}/app/assets"
+    system "mkdir", "#{app_name}/app/assets/images"
+    system "mkdir", "#{app_name}/app/assets/javascripts"
+    system "mkdir", "#{app_name}/app/assets/stylesheets"
+    File.open("#{app_name}/app/db_connection.rb", "w") do |file|
+      file_content = FileContent::db_connection_content(app_name)
+      file.write(file_content)
+    end
+    File.open("#{app_name}/app/#{app_name}.rb", "w") do |file|
+      file_content = FileContent::app_content
+      file.write(file_content)
+    end
+    File.open("#{app_name}/Gemfile", "w") do |file|
+      file_content = FileContent::gem_file_content
+      file.write(file_content)
+    end
+  end
+
+  desc "generate", "generates app components"
+  def generate
+    puts "generates app components"
+  end
+
+  desc "console", "opens app console"
+  def console
+    puts "opens project console"
+  end
+
+  desc "start", "starts app server"
+  def start
+    file_path = "#{Dir.pwd}/app/#{Dir.pwd.split('/').last}.rb"
+    system 'bundle', 'install'
+    system 'ruby', file_path
+  end
+
+  desc "n", "short for 'new'"
+  def n(app_name)
+    new(app_name)
+  end
+
+  desc "g", "short for 'generate'"
+  def g
+    generate
+  end
+
+  desc "c", "short for 'console'"
+  def c
+    console
+  end
+
+  desc "s", "short for 'start'"
+  def s
+    start
+  end
+end
+
+RaamenCLI.start

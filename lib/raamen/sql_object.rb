@@ -1,4 +1,4 @@
-require_relative "#{Dir.pwd}/bin/db_connection" 
+require_relative "#{Dir.pwd}/app/db_connection" 
 require_relative 'sql_object_modules/searchable'
 require_relative 'sql_object_modules/associatable'
 require 'active_support/inflector'
