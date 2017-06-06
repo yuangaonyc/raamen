@@ -1,6 +1,7 @@
 require 'active_support'
 require 'active_support/core_ext'
 require 'erb'
+require 'json'
 require_relative 'session'
 require_relative 'flash'
 
@@ -44,8 +45,7 @@ module Raamen
 
     def render(template_name)
       template_path = File.join(
-        File.dirname(__FILE__),
-        "..",
+        Dir.pwd,
         "views",
         "#{self.class.name.underscore}",
         "#{template_name}.html.erb"

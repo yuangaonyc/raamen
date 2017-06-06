@@ -1,5 +1,3 @@
-require 'json'
-
 module Raamen
   class Flash
     attr_reader :flash, :now

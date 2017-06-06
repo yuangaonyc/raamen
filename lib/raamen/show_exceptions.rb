@@ -1,5 +1,3 @@
-require 'erb'
-
 module Raamen
   class ShowExceptions
     attr_reader :app

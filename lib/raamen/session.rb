@@ -1,5 +1,3 @@
-require 'json'
-
 module Raamen
   class Session
     attr_reader :cookies
