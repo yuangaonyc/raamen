@@ -16,6 +16,7 @@ class RaamenCLI < Thor
     system "mkdir", "#{app_name}"
     system "touch", "#{app_name}/Gemfile"
     system "touch", "#{app_name}/.gitignore"
+    system "mkdir", "#{app_name}/public"
     system "mkdir", "#{app_name}/app"
     system "touch", "#{app_name}/app/#{app_name}.rb"
     system "touch", "#{app_name}/app/db_connection.rb"
