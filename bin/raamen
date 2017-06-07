@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
 require 'thor'
+require 'pry'
+require 'active_support'
+require 'active_support/core_ext'
 require_relative '../lib/raamen/file_contents/db_connection_content'
 require_relative '../lib/raamen/file_contents/app_content'
 require_relative '../lib/raamen/file_contents/gem_file_content'
+require_relative '../lib/raamen/file_contents/controller_content'
+require_relative '../lib/raamen/file_contents/model_content'
 
 class RaamenCLI < Thor
 
@@ -39,20 +44,40 @@ class RaamenCLI < Thor
   end
 
   desc "generate", "generates app components"
-  def generate
-    puts "generates app components"
+  def generate(component, name)
+    file_name = name.underscore
+    case component
+    when "controller"
+      system "touch", "#{Dir.pwd}/app/controllers/#{file_name}.rb"
+      system "mkdir", "#{Dir.pwd}/app/views/#{file_name}"
+      File.open("#{Dir.pwd}/app/controllers/#{file_name}.rb", "w") do |file|
+        file_content = FileContent::controller_content(name)
+        file.write(file_content)
+      end
+    when "model"
+      system "touch", "#{Dir.pwd}/app/models/#{file_name}.rb"
+      File.open("#{Dir.pwd}/app/models/#{file_name}.rb", "w") do |file|
+        file_content = FileContent::model_content(name)
+        file.write(file_content)
+      end
+    else
+      puts "Use 'raamen generate component name' to generate app components."
+    end
   end
 
   desc "console", "opens app console"
   def console
-    puts "opens project console"
+    require_relative "#{Dir.pwd}/app/#{Dir.pwd.split('/').last}.rb"
+    Pry.start app, prompt: [proc{ ">" }]
   end
 
   desc "start", "starts app server"
   def start
-    file_path = "#{Dir.pwd}/app/#{Dir.pwd.split('/').last}.rb"
-    system 'bundle', 'install'
-    system 'ruby', file_path
+    require_relative "#{Dir.pwd}/app/#{Dir.pwd.split('/').last}.rb"
+    Rack::Server.start(
+     app: app,
+     Port: 3000
+    )
   end
 
   desc "n", "short for 'new'"
@@ -61,8 +86,8 @@ class RaamenCLI < Thor
   end
 
   desc "g", "short for 'generate'"
-  def g
-    generate
+  def g(component, name)
+    generate(component, name)
   end
 
   desc "c", "short for 'console'"
