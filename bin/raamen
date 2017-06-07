@@ -68,7 +68,7 @@ class RaamenCLI < Thor
   desc "console", "opens app console"
   def console
     require_relative "#{Dir.pwd}/app/#{Dir.pwd.split('/').last}.rb"
-    Pry.start app, prompt: [proc{ ">" }]
+    Pry.start app, prompt: [proc{ ">>" }]
   end
 
   desc "start", "starts app server"
