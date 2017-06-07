@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["yuangaonyc@gmail.com"]
 
   spec.summary       = "A rack based web framework"
-  spec.description   = ""
+  spec.description   = "Raamen is a Rack and SQLite based MVC web framework. It contains modules to provide basic and necessary features of web app components as well as helpful Rack middleware, cookie manipulation, and CLI to make the development process faster and easier."
   spec.homepage      = "https://github.com/yuangaonyc/raamen"
   spec.license       = "MIT"
 
