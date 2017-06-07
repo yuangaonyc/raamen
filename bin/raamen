@@ -21,7 +21,6 @@ class RaamenCLI < Thor
     system "touch", "#{app_name}/app/#{app_name}.rb"
     system "touch", "#{app_name}/app/db_connection.rb"
     system "mkdir", "#{app_name}/db"
-    system "touch", "#{app_name}/db/#{app_name}.db"
     system "touch", "#{app_name}/db/#{app_name}.sql"
     system "mkdir", "#{app_name}/app/models"
     system "mkdir", "#{app_name}/app/controllers"

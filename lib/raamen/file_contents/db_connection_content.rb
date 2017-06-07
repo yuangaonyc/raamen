@@ -18,11 +18,9 @@ class DBConnection
   end
 
   def self.reset
-    commands = [
-      \"rm '\#{DB_FILE}'\",
-      \"cat '\#{SQL_FILE}' | sqlite3 '\#{DB_FILE}'\"
-    ]
+    return DBConnection.open(DB_FILE) if File.exist?(DB_FILE)
 
+    commands = [\"cat '\#{SQL_FILE}' | sqlite3 '\#{DB_FILE}'\"]
     commands.each { |command| `\#{command}` }
     DBConnection.open(DB_FILE)
   end
